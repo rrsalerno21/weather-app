@@ -31,6 +31,7 @@ $(document).ready(function(){
 
             $('#city-wind-speed').text(resp.wind.speed);
 
+            // UV Index AJAX call
             $.ajax({
                 url: `http://api.openweathermap.org/data/2.5/uvi?appid=f4465c08026d2de3e9ae72cb65313ea1&lat=${resp.coord.lat}&lon=${resp.coord.lon}`,
                 method: 'GET'
@@ -64,11 +65,56 @@ $(document).ready(function(){
         }).then(function(resp) {
             console.log('Weather Forecast:')
             console.log(resp);
+            
+            $('#forecast').empty();
+
+            // 1588766400 is list 6
+
+            var dayIndex = 8;
+
+            for (var i = 0; i < 5; i++) {
+                var curDay;
+                if (dayIndex >= 39) {
+                    curDay = resp.list[39]
+                } else {
+                    curDay = resp.list[dayIndex];
+                };
+                var date = Unix_timestamp(curDay.dt);
+                
+                var weatherIcon = `http://openweathermap.org/img/wn/${curDay.weather[0].icon}@2x.png`;
+
+                var dateHTML = `
+                <div class="col card bg-primary text-white mx-2">
+                <strong>${date}</strong>
+                <img src="${weatherIcon}" alt="${curDay.weather[0].main}" width="50px" />
+                <p>Temp: ${curDay.main.temp}\xB0 F</p>
+                <p>Humidity: ${curDay.main.humidity}%</p>
+                </div>
+                `;
+
+                $('#forecast').append(dateHTML);
+
+
+                dayIndex += 8;
+            }
+            
+            // list 6, 14, 22, 30, 38
+
+
         });
         
         // Then update the search history (prepend)
 
-    })
+    });
+
+    function Unix_timestamp(t) {
+        var dt = new Date((t * 1000) + (12 * 3600));
+        var month = dt.getMonth() + 1;
+        var day = dt.getDate();
+        var year = dt.getFullYear();
+        console.log(dt.getHours());
+        return (`${month}/${day}/${year}`);  
+    }
     
     
 
@@ -76,3 +122,11 @@ $(document).ready(function(){
 
     // Then update 5 Day forecase
 });
+
+// function Unix_timestamp(t) {
+//     var dt = new Date(t * 1000);
+//     var month = dt.getMonth() + 1;
+//     var day = dt.getDate();
+//     var year = dt.getFullYear();
+//     console.log(`${month}/${day}/${year}`);
+// }
