@@ -28,47 +28,31 @@ $(document).ready(function(){
         var historyValue = this.innerHTML;
         renderSearch(historyValue)
 
-        if (!(storage.searchArray.includes(historyValue))) {
-            $('#search-history').prepend(historyValue);
-            storage.searchArray.push(historyValue);
-        } else {
-            storage.searchArray.forEach(function(item,i){
-                if(item === historyValue){
-                  storage.searchArray.splice(i, 1);
-                  storage.searchArray.push(item);
-                }
-            });
-        }
-        
-        renderSearchHistory();
+        recordSearchHistory(historyValue);
     });
 
     // Get the user input on click of search button
     $('#search-btn').on('click', function() {
-        var searchInput = $('#search-input').val();
-        //var changedText = searchInput.replace(/ /g, '');
+        var input = $('#search-input').val();
+        var searchInput;
+
+        if (input.includes(',')) {
+            searchInput = input.replace(', ', ',');
+            console.log(searchInput);
+        } else {
+            searchInput = input;
+        }
+
+
 
         // render UI based on search input
         renderSearch(searchInput);
         
         // Then update the search history (prepend)
-        var searchItem = `<li class="list-group-item text-capitalize search-history-click">${searchInput}</li>`;
-
-        if (!(storage.searchArray.includes(searchInput))) {
-            $('#search-history').prepend(searchItem);
-            storage.searchArray.push(searchInput);
-        } else {
-            storage.searchArray.forEach(function(item,i){
-                if(item === searchItem){
-                  storage.searchArray.splice(i, 1);
-                  storage.searchArray.unshift(item);
-                }
-            });
-
-            renderSearchHistory();
-        }
+        recordSearchHistory(input);
 
         localStorage.setItem('searchItems', JSON.stringify(storage));
+
     });
 
     function Unix_timestamp(t) {
@@ -77,6 +61,25 @@ $(document).ready(function(){
         var day = dt.getDate();
         var year = dt.getFullYear();
         return (`${month}/${day}/${year}`);  
+    }
+
+    function recordSearchHistory(value) {
+        var searchItem = `<li class="list-group-item text-capitalize search-history-click">${value}</li>`;
+
+        if (!(storage.searchArray.includes(value))) {
+            $('#search-history').prepend(searchItem);
+            storage.searchArray.push(value);
+        } else {
+            storage.searchArray.forEach(function(item,i){
+                if(item === value){
+                  storage.searchArray.splice(i, 1);
+                  storage.searchArray.push(item);
+                }
+            });
+        }
+        
+        renderSearchHistory();
+
     }
 
     function renderSearch(value) {
@@ -145,7 +148,7 @@ $(document).ready(function(){
 
             // 1588766400 is list 6
 
-            var dayIndex = 8;
+            var dayIndex = 6;
 
             for (var i = 0; i < 5; i++) {
                 var curDay;
