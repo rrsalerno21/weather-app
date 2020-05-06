@@ -28,7 +28,7 @@ $(document).ready(function(){
         var historyValue = this.innerHTML;
         renderSearch(historyValue)
 
-        recordSearchHistory(historyValue);
+        // recordSearchHistory(historyValue);
     });
 
     // Get the user input on click of search button
@@ -48,11 +48,7 @@ $(document).ready(function(){
         // render UI based on search input
         renderSearch(searchInput);
         
-        // Then update the search history (prepend)
-        recordSearchHistory(input);
-
         localStorage.setItem('searchItems', JSON.stringify(storage));
-
     });
 
     function Unix_timestamp(t) {
@@ -92,7 +88,13 @@ $(document).ready(function(){
         $.ajax({
             url: weatherQuery,
             method: 'GET'
-        }).then(function(resp) {
+        })
+        .fail(function() {
+            alert("Invalid search");
+            $('#search-input').val('');
+            $('#search-input').focus();
+        })
+        .then(function(resp) {
             console.log('Current Weather:')
             console.log(resp);
 
@@ -131,50 +133,72 @@ $(document).ready(function(){
                 } else if (innerResp.value >= 11) {
                     $('#city-UV').css('background-color', 'violet');
                 }
-            });
+            });  
 
-
-        });
-        
-        // Run a API GET call for forecast weather when the search button is clicked
-        $.ajax({
-            url: forecastQuery,
-            method: 'GET'
-        }).then(function(resp) {
-            console.log('Weather Forecast:')
-            console.log(resp);
-            
-            $('#forecast').empty();
-
-            // 1588766400 is list 6
-
-            var dayIndex = 6;
-
-            for (var i = 0; i < 5; i++) {
-                var curDay;
-                if (dayIndex >= 39) {
-                    curDay = resp.list[39]
-                } else {
-                    curDay = resp.list[dayIndex];
-                };
-                var date = Unix_timestamp(curDay.dt);
+            // Run a API GET call for forecast weather when the search button is clicked
+            $.ajax({
+                url: forecastQuery,
+                method: 'GET'
+            }).then(function(resp) {
+                console.log('Weather Forecast:')
+                console.log(resp);
                 
-                var weatherIcon = `http://openweathermap.org/img/wn/${curDay.weather[0].icon}@2x.png`;
+                $('#forecast').empty();
+    
+                var dayIndex = 6;
+    
+                for (var i = 0; i < 5; i++) {
+                    var curDay;
+                    if (dayIndex >= 39) {
+                        curDay = resp.list[39]
+                    } else {
+                        curDay = resp.list[dayIndex];
+                    };
+                    var date = Unix_timestamp(curDay.dt);
+                    
+                    var weatherIcon = `http://openweathermap.org/img/wn/${curDay.weather[0].icon}@2x.png`;
+    
+                    var dateHTML = `
+                    <div class="col card bg-primary text-white mx-2">
+                    <strong>${date}</strong>
+                    <img src="${weatherIcon}" alt="${curDay.weather[0].main}" width="50px" />
+                    <p>Temp: ${curDay.main.temp}\xB0 F</p>
+                    <p>Humidity: ${curDay.main.humidity}%</p>
+                    </div>
+                    `;
+    
+                    $('#forecast').append(dateHTML);
+    
+    
+                    dayIndex += 8;
+                }
+            });           
+        });
 
-                var dateHTML = `
-                <div class="col card bg-primary text-white mx-2">
-                <strong>${date}</strong>
-                <img src="${weatherIcon}" alt="${curDay.weather[0].main}" width="50px" />
-                <p>Temp: ${curDay.main.temp}\xB0 F</p>
-                <p>Humidity: ${curDay.main.humidity}%</p>
-                </div>
-                `;
+        // focus back on element
+        $('#search-input').focus(function() {
+            $(this).select();
+        });
 
-                $('#forecast').append(dateHTML);
+        // log correct input value
+        var correctDisplay;
+        if (value.includes(',')) {
+            correctDisplay = value.replace(',', ', ');
+        } else {
+            correctDisplay = value;
+        }
 
-
-                dayIndex += 8;
-            }
-        });           
+        recordSearchHistory(correctDisplay);
+        
     };
+
+    // have loading screen
+    $( document ).ajaxStart(function() {
+        $( "#loading" ).show();
+    });
+
+    // hide loading screen
+    $( document ).ajaxStop(function() {
+        $( "#loading" ).hide();
+    });
 });
