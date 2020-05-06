@@ -192,6 +192,17 @@ $(document).ready(function(){
         
     };
 
+    // Enter keypress event for search bar
+    $('#search-input').keypress(function(e) {
+        var key = e.which;
+
+        if (key == 13) {
+            console.log('working enter')
+            $('#search-btn').click();
+            return false;
+        }
+    })
+
     // have loading screen
     $( document ).ajaxStart(function() {
         $( "#loading" ).show();
