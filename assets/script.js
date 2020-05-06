@@ -1,13 +1,89 @@
 $(document).ready(function(){
+    // localStorage object
+    var JSONstorage = JSON.parse(localStorage.getItem('searchItems'));
+    var storage;
+
+    if (JSONstorage !== null ) {
+        storage = JSONstorage;
+    } else {
+        storage = {
+            searchArray: []
+        };
+    }
+
+    // render previous searches
+    function renderSearchHistory() {
+        $('#search-history').empty();
+
+        storage.searchArray.forEach(function(cur, i) {
+            var searchItem = `<li class="list-group-item text-capitalize search-history-click">${cur}</li>`;
+            $('#search-history').prepend(searchItem);
+        });
+    };
+
+    renderSearchHistory();
+
+    // Click event on a previous search
+    $(document).on('click', '.search-history-click', function() {
+        var historyValue = this.innerHTML;
+        renderSearch(historyValue)
+
+        if (!(storage.searchArray.includes(historyValue))) {
+            $('#search-history').prepend(historyValue);
+            storage.searchArray.push(historyValue);
+        } else {
+            storage.searchArray.forEach(function(item,i){
+                if(item === historyValue){
+                  storage.searchArray.splice(i, 1);
+                  storage.searchArray.push(item);
+                }
+            });
+        }
+        
+        renderSearchHistory();
+    });
 
     // Get the user input on click of search button
     $('#search-btn').on('click', function() {
         var searchInput = $('#search-input').val();
         //var changedText = searchInput.replace(/ /g, '');
+
+        // render UI based on search input
+        renderSearch(searchInput);
+        
+        // Then update the search history (prepend)
+        var searchItem = `<li class="list-group-item text-capitalize search-history-click">${searchInput}</li>`;
+
+        if (!(storage.searchArray.includes(searchInput))) {
+            $('#search-history').prepend(searchItem);
+            storage.searchArray.push(searchInput);
+        } else {
+            storage.searchArray.forEach(function(item,i){
+                if(item === searchItem){
+                  storage.searchArray.splice(i, 1);
+                  storage.searchArray.unshift(item);
+                }
+            });
+
+            renderSearchHistory();
+        }
+
+        localStorage.setItem('searchItems', JSON.stringify(storage));
+    });
+
+    function Unix_timestamp(t) {
+        var dt = new Date((t * 1000) + (12 * 3600));
+        var month = dt.getMonth() + 1;
+        var day = dt.getDate();
+        var year = dt.getFullYear();
+        return (`${month}/${day}/${year}`);  
+    }
+
+    function renderSearch(value) {
         
         // setup API query variables
-        var weatherQuery = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchInput + '&units=imperial&appid=f4465c08026d2de3e9ae72cb65313ea1';
-        var forecastQuery = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&units=imperial&appid=f4465c08026d2de3e9ae72cb65313ea1';
+        var weatherQuery = 'https://api.openweathermap.org/data/2.5/weather?q=' + value + '&units=imperial&appid=f4465c08026d2de3e9ae72cb65313ea1';
+        var forecastQuery = 'https://api.openweathermap.org/data/2.5/forecast?q=' + value + '&units=imperial&appid=f4465c08026d2de3e9ae72cb65313ea1';
         
         // Run a API GET call for current weather when the search button is clicked
         $.ajax({
@@ -36,7 +112,6 @@ $(document).ready(function(){
                 url: `http://api.openweathermap.org/data/2.5/uvi?appid=f4465c08026d2de3e9ae72cb65313ea1&lat=${resp.coord.lat}&lon=${resp.coord.lon}`,
                 method: 'GET'
             }).then(function(innerResp){
-                console.log(innerResp);
                 $('#city-UV').text(innerResp.value);
                 $('#city-UV').css('color', '#ffffff');
 
@@ -97,36 +172,6 @@ $(document).ready(function(){
 
                 dayIndex += 8;
             }
-            
-            // list 6, 14, 22, 30, 38
-
-
-        });
-        
-        // Then update the search history (prepend)
-
-    });
-
-    function Unix_timestamp(t) {
-        var dt = new Date((t * 1000) + (12 * 3600));
-        var month = dt.getMonth() + 1;
-        var day = dt.getDate();
-        var year = dt.getFullYear();
-        console.log(dt.getHours());
-        return (`${month}/${day}/${year}`);  
-    }
-    
-    
-
-    // Then update today's detail
-
-    // Then update 5 Day forecase
+        });           
+    };
 });
-
-// function Unix_timestamp(t) {
-//     var dt = new Date(t * 1000);
-//     var month = dt.getMonth() + 1;
-//     var day = dt.getDate();
-//     var year = dt.getFullYear();
-//     console.log(`${month}/${day}/${year}`);
-// }
