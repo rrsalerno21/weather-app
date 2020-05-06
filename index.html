@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all" rel="stylesheet">
+    <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all" rel="stylesheet">
+    <link href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Weather App</title>
@@ -18,14 +21,16 @@
         
 
         <div class="row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="card">
-                    <div class="card-header">
-                      City Search
+                    <div class="card-header font-weight-bold">
+                      Search for a City
                     </div>
                     <div class="card-body">
-                        <input id="search-input" type="text" class="form-control" placeholder="Monterey, California" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <button id="search-btn" class="btn btn-primary">Search</button>
+                        <div class="row">
+                            <input id="search-input" type="text" class="form-control col-8" placeholder="Monterey, California" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <button id="search-btn" class="btn btn-primary col-2"><i class="fas fa-search"></i></button>
+                        </div>
                     </div>
                 </div>
 
@@ -37,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="col-9">
+            <div class="col-8">
 
                 <div id="loading" class="hide">
                     <p>Loading...</p>
@@ -45,15 +50,15 @@
 
                 <div class="card">
                     <h2 id="city-header" class="card-title">
-                        Monterey (5/4/20)</h2> <span class="weather-icon"></span>
+                        </h2> <span class="weather-icon"></span>
                     <div class="card-body">
-                        <div>Temperature: <span id="city-temp">90.9 degrees F</span></div>
+                        <div>Temperature: <span id="city-temp"></span></div>
 
-                        <div>Humidity: <span id="city-humidity">41</span>%</div>
+                        <div>Humidity: <span id="city-humidity"></span>%</div>
 
-                        <div>Wind Speed: <span id="city-wind-speed">4.7</span> MPH</div>
+                        <div>Wind Speed: <span id="city-wind-speed"></span> MPH</div>
 
-                        <div>UV Index: <span id="city-UV" class="p-1">9.49</span></div>
+                        <div>UV Index: <span id="city-UV" class="p-1"></span></div>
                     </div>
                 </div>
     
