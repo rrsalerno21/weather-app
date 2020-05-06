@@ -14,41 +14,36 @@
 <body>
     <div class="container-fluid">
         
-        <header class="text-center bg-dark text-white p-3 mb-2">
+        <header class="text-center bg-dark text-white p-3">
             <h1>Weather App</h1>
         </header>
 
         
 
         <div class="row">
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header font-weight-bold">
-                      Search for a City
-                    </div>
-                    <div class="card-body">
+            <div class="col-md-4 pr-0 mb-3">
+                <div class="card bg-light p-1 border-0">
+                    <div class="card-body"> 
                         <div class="row">
-                            <input id="search-input" type="text" class="form-control col-8" placeholder="Monterey, California" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <button id="search-btn" class="btn btn-primary col-2"><i class="fas fa-search"></i></button>
+                            <label for="search-input" class="font-weight-bold col-12 pl-0">Search for a City</label>  
+                            <input id="search-input" type="text" class="form-control col-8" placeholder="Monterey" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <button id="search-btn" class="btn btn-primary col-2 p-1"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <ul class="list-group list-group-flush" id="search-history">
+                
+                    <ul class="list-group list-group-flush border" id="search-history">
                         
                     </ul>
+
+                    <div id="loading" class="hide">
+                        <p>Loading...</p>
+                    </div>    
                     
                 </div>
             </div>
 
-            <div class="col-8">
-
-                <div id="loading" class="hide">
-                    <p>Loading...</p>
-                </div>
-
-                <div class="card">
+            <div class="col-lg-8">
+                <div class="card hide p-3" id="current-weather-div">
                     <h2 id="city-header" class="card-title">
                         </h2> <span class="weather-icon"></span>
                     <div class="card-body">
@@ -58,11 +53,11 @@
 
                         <div>Wind Speed: <span id="city-wind-speed"></span> MPH</div>
 
-                        <div>UV Index: <span id="city-UV" class="p-1"></span></div>
+                        <div>UV Index: <span id="city-UV" class="p-1 rounded"></span></div>
                     </div>
                 </div>
     
-                <div class="card">
+                <div class="card border-0 my-2 hide" id="weather-forecast-div">
                     <h3 class="card-title">5-Day Forecast:</h3>
                     <div class="card-body">
                         <div class="row" id="forecast">

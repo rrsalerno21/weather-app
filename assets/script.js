@@ -43,8 +43,6 @@ $(document).ready(function(){
             searchInput = input;
         }
 
-
-
         // render UI based on search input
         renderSearch(searchInput);
         
@@ -79,7 +77,7 @@ $(document).ready(function(){
     }
 
     function renderSearch(value) {
-        
+
         // setup API query variables
         var weatherQuery = 'https://api.openweathermap.org/data/2.5/weather?q=' + value + '&units=imperial&appid=f4465c08026d2de3e9ae72cb65313ea1';
         var forecastQuery = 'https://api.openweathermap.org/data/2.5/forecast?q=' + value + '&units=imperial&appid=f4465c08026d2de3e9ae72cb65313ea1';
@@ -97,6 +95,10 @@ $(document).ready(function(){
         .then(function(resp) {
             console.log('Current Weather:')
             console.log(resp);
+
+            // show hidden weather divs
+            $("#current-weather-div").show();
+            $('#weather-forecast-div').show();
 
             var myDate = new Date(resp.dt *1000);
             var weatherIcon = `http://openweathermap.org/img/wn/${resp.weather[0].icon}@2x.png`
@@ -135,6 +137,16 @@ $(document).ready(function(){
                 }
             });  
 
+            // log correct input value
+            var correctDisplay;
+            if (value.includes(',')) {
+                correctDisplay = value.replace(',', ', ');
+            } else {
+                correctDisplay = value;
+            }
+
+            recordSearchHistory(correctDisplay);
+
             // Run a API GET call for forecast weather when the search button is clicked
             $.ajax({
                 url: forecastQuery,
@@ -159,7 +171,7 @@ $(document).ready(function(){
                     var weatherIcon = `http://openweathermap.org/img/wn/${curDay.weather[0].icon}@2x.png`;
     
                     var dateHTML = `
-                    <div class="col card bg-primary text-white mx-2">
+                    <div class="col-sm card bg-primary text-white m-2">
                     <strong>${date}</strong>
                     <img src="${weatherIcon}" alt="${curDay.weather[0].main}" width="50px" />
                     <p>Temp: ${curDay.main.temp}\xB0 F</p>
@@ -180,15 +192,7 @@ $(document).ready(function(){
             $(this).select();
         });
 
-        // log correct input value
-        var correctDisplay;
-        if (value.includes(',')) {
-            correctDisplay = value.replace(',', ', ');
-        } else {
-            correctDisplay = value;
-        }
-
-        recordSearchHistory(correctDisplay);
+        
         
     };
 
@@ -203,13 +207,13 @@ $(document).ready(function(){
         }
     })
 
-    // have loading screen
+    // show loading screen
     $( document ).ajaxStart(function() {
         $( "#loading" ).show();
     });
 
     // hide loading screen
     $( document ).ajaxStop(function() {
-        $( "#loading" ).hide();
+        $( "#loading" ).hide();       
     });
 });
