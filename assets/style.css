@@ -1,8 +1,10 @@
+/* Set a cursor and font-size on hover of search history items */
 .search-history-click:hover {
     cursor: pointer;
     font-size: 17px;
 }
 
+/* set to display none */
 .hide {
     display: none;
 }

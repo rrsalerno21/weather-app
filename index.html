@@ -3,71 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all" rel="stylesheet">
-    <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all" rel="stylesheet">
-    <link href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- Bootstrap Link -->
+    <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all" rel="stylesheet"> <!-- Font awesome link -->
+    <link href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all" rel="stylesheet"> <!-- Font awesome link -->
+    <link href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all" rel="stylesheet"> <!-- Font awesome link -->
+    <link rel="stylesheet" href="assets/style.css" type="text/css"> <!-- My Style Sheet -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- jQuery link -->
     <title>Weather App</title>
 </head>
 <body>
-    <div class="container-fluid">
-        
+
+    <!-- Main container -->
+    <div class="container-fluid"> 
+        <!-- Header -->
         <header class="text-center bg-dark text-white p-3">
             <h1>Weather App</h1>
         </header>
 
         
-
-        <div class="row">
-            <div class="col-md-4 pr-0 mb-3">
+        <!-- Main Row -->
+        <main class="row">
+            <!-- Search Column -->
+            <section class="col-md-4 pr-0 mb-3">
+                <!-- Search bar card -->
                 <div class="card bg-light p-1 border-0">
                     <div class="card-body"> 
                         <div class="row">
+                            <!-- Search bar label -->
                             <label for="search-input" class="font-weight-bold col-12 pl-0">Search for a City</label>  
+                            <!-- Input bar -->
                             <input id="search-input" type="text" class="form-control col-8" placeholder="Monterey" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <!-- Button to render search -->
                             <button id="search-btn" class="btn btn-primary col-2 p-1"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
-                
+                    
+                    <!-- List to render search history -->
                     <ul class="list-group list-group-flush border" id="search-history">
                         
                     </ul>
 
+                    <!-- Loading div -->
                     <div id="loading" class="hide">
                         <p>Loading...</p>
                     </div>    
                     
                 </div>
-            </div>
+            </section>
 
-            <div class="col-lg-8">
-                <div class="card hide p-3" id="current-weather-div">
+            <!-- Weather response column -->
+            <section class="col-lg-8">
+                <!-- Section to display current weather -->
+                <section class="card hide p-3" id="current-weather-div">
+                    <!-- City header -->
                     <h2 id="city-header" class="card-title">
                         </h2> <span class="weather-icon"></span>
                     <div class="card-body">
+                        <!-- City temperature -->
                         <div>Temperature: <span id="city-temp"></span></div>
 
+                        <!-- City Humidity -->
                         <div>Humidity: <span id="city-humidity"></span>%</div>
 
+                        <!-- City Wind Speed -->
                         <div>Wind Speed: <span id="city-wind-speed"></span> MPH</div>
 
+                        <!-- City UV Index -->
                         <div>UV Index: <span id="city-UV" class="p-1 rounded"></span></div>
                     </div>
-                </div>
+                </section>
     
-                <div class="card border-0 my-2 hide" id="weather-forecast-div">
+                <!-- Section for 5 Day Forecast -->
+                <section class="card border-0 my-2 hide" id="weather-forecast-div">
+                    <!-- Forecast Title -->
                     <h3 class="card-title">5-Day Forecast:</h3>
                     <div class="card-body">
+                        <!-- Div row to append the forecast -->
                         <div class="row" id="forecast">
                         </div>
                     </div>
-                </div>
-            </div>
+                </section>
+            </section>
 
-        </div>
+        </main>
     </div>
-    <script src="assets/script.js"></script>
+    <script src="assets/script.js"></script> <!-- My javascript logic -->
 </body>
 </html>
