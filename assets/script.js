@@ -77,6 +77,8 @@ $(document).ready(function(){
                 }
             });
         }
+
+        localStorage.setItem('searchItems', JSON.stringify(storage));
         
         // now render the newly updated search history
         renderSearchHistory();
@@ -261,7 +263,6 @@ $(document).ready(function(){
         var key = e.which;
 
         if (key == 13) {
-            console.log('working enter')
             $('#search-btn').click();
             return false;
         }
@@ -286,9 +287,9 @@ $(document).ready(function(){
     // ===================================
 
     // call a search on the last searched item
-    if (storage.searchArray !== null) {
+    if (storage.searchArray.length > 0) {
         renderSearch(storage.searchArray[storage.searchArray.length - 1]);
-    }
+    } 
     // call renderSearchHistory
     renderSearchHistory();
 });
