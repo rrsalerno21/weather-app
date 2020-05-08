@@ -114,7 +114,7 @@ $(document).ready(function(){
             var myDate = new Date(resp.dt *1000);
 
             // set a variable of the source for the weather image icon
-            var weatherIcon = `http://openweathermap.org/img/wn/${resp.weather[0].icon}@2x.png`
+            var weatherIcon = `https://openweathermap.org/img/wn/${resp.weather[0].icon}@2x.png`
 
             // render the current weather section
             $('#city-header').text(`${resp.name} (${myDate.toDateString()})`);
