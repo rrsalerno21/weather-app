@@ -130,7 +130,7 @@ $(document).ready(function(){
 
             // UV Index AJAX call per openweather's API
             $.ajax({
-                url: `http://api.openweathermap.org/data/2.5/uvi?appid=f4465c08026d2de3e9ae72cb65313ea1&lat=${resp.coord.lat}&lon=${resp.coord.lon}`,
+                url: `https://api.openweathermap.org/data/2.5/uvi?appid=f4465c08026d2de3e9ae72cb65313ea1&lat=${resp.coord.lat}&lon=${resp.coord.lon}`,
                 method: 'GET'
             }).then(function(innerResp){
                 // render the value of the city UV
@@ -183,7 +183,7 @@ $(document).ready(function(){
                     var date = Unix_timestamp(curDay.dt);
                     
                     // set the weatherIcon src url
-                    var weatherIcon = `http://openweathermap.org/img/wn/${curDay.weather[0].icon}@2x.png`;
+                    var weatherIcon = `https://openweathermap.org/img/wn/${curDay.weather[0].icon}@2x.png`;
     
                     // set the HTML to append
                     var dateHTML = `
