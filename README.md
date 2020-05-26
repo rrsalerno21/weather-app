@@ -1,5 +1,5 @@
 # Weather App
-A web app that allows users to search for the current weather by city as well as a 5 day forecast.
+A web app that allows users to search for the current weather by city as well as a 5 day forecast.  Deployed at [https://rrsalerno21.github.io/weather-app/](https://rrsalerno21.github.io/weather-app/)
 
 ## Technology Used
 HTML5, CSS3, Bootstrap, Javascript, jQuery, [OpenWeather API](https://openweathermap.org/)
